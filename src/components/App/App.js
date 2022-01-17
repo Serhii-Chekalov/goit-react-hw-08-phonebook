@@ -1,81 +1,71 @@
-import { useState, useEffect } from "react";
-import ContactForm from "../ContactForm/ContactForm";
-import ContactList from "../ContactsList/ContactList";
-import Filter from "../Filter/Filter";
-import { PrimaryTitle, SecondaryTitle } from "./App.styled";
-import { v4 as uuidv4 } from "uuid";
-import toast, { Toaster } from "react-hot-toast";
+import { useEffect, lazy, Suspense } from "react";
+import { Switch } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "react-loader-spinner";
+import PrivateRoute from "../PrivateRoute";
+import PublicRoute from "../PublicRouter";
+import AppBar from "../AppBar/AppBar";
+import { fetchCurrentUser } from "../../redux/auth/authOperations";
+import authSelectors from "../../redux/auth/authSelectors";
+import styles from "../AppBar/AppBar.module.css";
 
-function App() {
-  const [contacts, setContacts] = useState([
-    { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-    { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-    { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-    { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-  ]);
+const AsyncHomeView = lazy(() =>
+  import("../../views/homePageView" /* webpackChunkName: "home-page"*/)
+);
+const AsyncLoginView = lazy(() =>
+  import("../../views/loginView" /* webpackChunkName: "login-page"*/)
+);
+const AsyncRegisterView = lazy(() =>
+  import("../../views/registerView" /* webpackChunkName: "register-page"*/)
+);
+const AsyncContactsView = lazy(() =>
+  import("../../views/contactsView" /* webpackChunkName: "contacts-page"*/)
+);
 
-  const [filter, setFilter] = useState("");
+export default function App() {
+  const dispatch = useDispatch();
+  const isFetching = useSelector(authSelectors.getIsFetching);
 
   useEffect(() => {
-    const storageContacts = localStorage.getItem("contacts");
-    const storageContactsParced = JSON.parse(storageContacts);
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
 
-    if (storageContactsParced) {
-      setContacts([...storageContactsParced]);
-    }
-  }, []);
+  return !isFetching ? (
+    <div>
+      <AppBar />
 
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
+      <Suspense
+        fallback={
+          <Loader
+            type="Rings"
+            color="#00BFFF"
+            height={80}
+            width={80}
+            timeout={3000}
+            display="flex"
+            justify-content="center"
+            className={styles.loader}
+          />
+        }
+      >
+        <Switch>
+          <PublicRoute exact path="/">
+            <AsyncHomeView />
+          </PublicRoute>
 
-  const notify = (name) => toast(`${name} is already in contacts`);
+          <PublicRoute exact path="/register" redirectTo="/contacts" restricted>
+            <AsyncRegisterView />
+          </PublicRoute>
 
-  const addContact = (name, number) => {
-    const newContact = {
-      id: uuidv4(),
-      name,
-      number,
-    };
+          <PublicRoute exact path="/login" redirectTo="/contacts" restricted>
+            <AsyncLoginView />
+          </PublicRoute>
 
-    contacts.some((contact) => contact.name === newContact.name)
-      ? notify(newContact.name)
-      : setContacts([...contacts, newContact]);
-  };
-
-  const deleteContact = (id) => {
-    return setContacts(contacts.filter((contact) => contact.id !== id));
-  };
-
-  const handleFilter = (e) => {
-    setFilter(e.target.value);
-  };
-
-  const visibleContacts = () => {
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
-
-  return (
-    <>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: "red",
-            color: "#000",
-          },
-        }}
-      />
-      <PrimaryTitle>Phonebook</PrimaryTitle>
-      <ContactForm onSubmit={addContact} />
-      <SecondaryTitle>Contacts</SecondaryTitle>
-      <Filter onChange={handleFilter} value={filter} />
-      <ContactList contacts={visibleContacts()} deleteId={deleteContact} />
-    </>
-  );
+          <PrivateRoute path="/contacts" redirectTo="/login">
+            <AsyncContactsView />
+          </PrivateRoute>
+        </Switch>
+      </Suspense>
+    </div>
+  ) : null;
 }
-
-export default App;
