@@ -1,7 +1,7 @@
 import { Wrapper, Input, Label } from "./Filter.styled";
 import { useSelector, useDispatch } from "react-redux";
-import { getFilterName } from "../../redux/PhoneBook/actions";
-import { filter } from "../../redux/PhoneBook/selectors";
+import { getFilterName } from "../../redux/PhoneBook/PhonebookActions";
+import { filter } from "../../redux/PhoneBook/PhonebookSelectors";
 
 const Filter = () => {
   const formFilter = useSelector(filter);

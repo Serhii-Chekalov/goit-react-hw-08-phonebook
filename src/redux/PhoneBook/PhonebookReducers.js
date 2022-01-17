@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { createReducer } from "@reduxjs/toolkit";
-import { addContact, removeContact, getFilterName } from "./actions";
+import { addContact, removeContact, getFilterName } from "./PhonebookActions";
 
 const itemReducer = createReducer(
   [

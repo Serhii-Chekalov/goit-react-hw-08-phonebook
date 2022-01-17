@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import { addContact } from "../../redux/PhoneBook/actions";
-import { contacts } from "../../redux/PhoneBook/selectors";
+import { addContact } from "../../redux/PhoneBook/PhonebookActions";
+import { contacts } from "../../redux/PhoneBook/PhonebookSelectors";
 import { Form, Label, Input, Button } from "./ContactForm.styled";
 
 function ContactForm() {

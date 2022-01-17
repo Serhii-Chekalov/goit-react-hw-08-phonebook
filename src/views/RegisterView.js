@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Col, Row, Button, Container } from "react-bootstrap";
-import { register } from "../redux/auth/authOperations";
+import { register } from "../redux/Auth/AuthOperations";
 
 export default function RegisterView() {
   const [name, setName] = useState("");

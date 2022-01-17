@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Form, Col, Row, Button, Container } from "react-bootstrap";
-import { logIn } from "../redux/auth/authOperations";
+import { logIn } from "../redux/Auth/AuthOperations";
 
 export default function LoginView() {
   const [email, setEmail] = useState("");

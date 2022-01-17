@@ -5,21 +5,21 @@ import Loader from "react-loader-spinner";
 import PrivateRoute from "../PrivateRoute";
 import PublicRoute from "../PublicRouter";
 import AppBar from "../AppBar/AppBar";
-import { fetchCurrentUser } from "../../redux/auth/authOperations";
-import authSelectors from "../../redux/auth/authSelectors";
+import { fetchCurrentUser } from "../../redux/Auth/AuthOperations";
+import authSelectors from "../../redux/Auth/AuthSelectors";
 import styles from "../AppBar/AppBar.module.css";
 
 const AsyncHomeView = lazy(() =>
-  import("../../views/homePageView" /* webpackChunkName: "home-page"*/)
+  import("../../views/HomepageView" /* webpackChunkName: "home-page"*/)
 );
 const AsyncLoginView = lazy(() =>
-  import("../../views/loginView" /* webpackChunkName: "login-page"*/)
+  import("../../views/LoginView" /* webpackChunkName: "login-page"*/)
 );
 const AsyncRegisterView = lazy(() =>
-  import("../../views/registerView" /* webpackChunkName: "register-page"*/)
+  import("../../views/RegisterView" /* webpackChunkName: "register-page"*/)
 );
 const AsyncContactsView = lazy(() =>
-  import("../../views/contactsView" /* webpackChunkName: "contacts-page"*/)
+  import("../../views/ContactsView" /* webpackChunkName: "contacts-page"*/)
 );
 
 export default function App() {

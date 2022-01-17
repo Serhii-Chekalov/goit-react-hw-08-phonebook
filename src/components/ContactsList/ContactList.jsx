@@ -1,7 +1,7 @@
 import { List, ListItem, Button } from "./ContactList.styled";
 import { useSelector, useDispatch } from "react-redux";
-import { removeContact } from "../../redux/PhoneBook/actions";
-import { visibleContacts } from "../../redux/PhoneBook/selectors";
+import { removeContact } from "../../redux/PhoneBook/PhonebookActions";
+import { visibleContacts } from "../../redux/PhoneBook/PhonebookSelectors";
 
 const ContactList = () => {
   const dispatch = useDispatch();
