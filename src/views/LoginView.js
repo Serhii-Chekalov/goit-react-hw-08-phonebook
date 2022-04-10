@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Form, Col, Row, Button, Container } from "react-bootstrap";
-import { logIn } from "../redux/Auth/AuthOperations";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Form, Col, Row, Button, Container } from 'react-bootstrap';
+import { logIn } from '../redux/auth/authOperations';
 
 export default function LoginView() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const onSubmit = (email, password) => dispatch(logIn({ email, password }));
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    name === "email" ? setEmail(value) : setPassword(value);
+    name === 'email' ? setEmail(value) : setPassword(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     onSubmit(email, password);
-    setEmail("");
-    setPassword("");
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -28,7 +28,7 @@ export default function LoginView() {
         <Form.Group>
           <Row>
             <Col>
-              <Form.Label>Почта</Form.Label>
+              <Form.Label>Mail</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
@@ -39,7 +39,7 @@ export default function LoginView() {
             </Col>
           </Row>
 
-          <Form.Label>Пароль</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Row>
             <Col>
               <Form.Control
@@ -53,7 +53,7 @@ export default function LoginView() {
           </Row>
           <Row>
             <Col>
-              <Button type="submit">Вход</Button>
+              <Button type="submit">Login</Button>
             </Col>
           </Row>
         </Form.Group>

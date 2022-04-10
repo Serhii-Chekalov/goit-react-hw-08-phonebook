@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Navbar } from "react-bootstrap";
-import authSelectors from "../../redux/Auth/AuthSelectors";
-import { logOut } from "../../redux/Auth/AuthOperations";
+import { useDispatch, useSelector } from 'react-redux';
+import { Navbar } from 'react-bootstrap';
+import authSelectors from '../../redux/auth/authSelectors';
+import { logOut } from '../../redux/auth/authOperations';
 
 export default function UserMenu() {
   const dispatch = useDispatch();
@@ -9,13 +9,9 @@ export default function UserMenu() {
 
   return (
     <Navbar>
-      <p className="greetings">Добро пожаловать, {name} </p>
-      <button
-        className="btn-logout"
-        type="button"
-        onClick={() => dispatch(logOut())}
-      >
-        Выйти
+      <p className="greetings">Welcome, {name} </p>
+      <button className="btn-logout" type="button" onClick={() => dispatch(logOut())}>
+        Exit
       </button>
     </Navbar>
   );

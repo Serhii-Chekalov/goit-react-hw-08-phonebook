@@ -1,26 +1,25 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Form, Col, Row, Button, Container } from "react-bootstrap";
-import { register } from "../redux/Auth/AuthOperations";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Form, Col, Row, Button, Container } from 'react-bootstrap';
+import { register } from '../redux/auth/authOperations';
 
 export default function RegisterView() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const onSubmit = (name, email, password) =>
-    dispatch(register({ name, email, password }));
+  const onSubmit = (name, email, password) => dispatch(register({ name, email, password }));
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
-      case "name":
+      case 'name':
         setName(value);
         break;
-      case "email":
+      case 'email':
         setEmail(value);
         break;
-      case "password":
+      case 'password':
         setPassword(value);
         break;
       default:
@@ -28,12 +27,12 @@ export default function RegisterView() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     onSubmit(name, email, password);
-    setName("");
-    setEmail("");
-    setPassword("");
+    setName('');
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -42,7 +41,7 @@ export default function RegisterView() {
         <Form.Group>
           <Row>
             <Col>
-              <Form.Label>Имя</Form.Label>
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
@@ -55,7 +54,7 @@ export default function RegisterView() {
             </Col>
           </Row>
 
-          <Form.Label>Почта</Form.Label>
+          <Form.Label>Mail</Form.Label>
           <Row>
             <Col>
               <Form.Control
@@ -68,7 +67,7 @@ export default function RegisterView() {
             </Col>
           </Row>
 
-          <Form.Label>Пароль</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Row>
             <Col>
               <Form.Control
@@ -85,7 +84,7 @@ export default function RegisterView() {
         </Form.Group>
         <Row>
           <Col>
-            <Button type="submit">Зарегистрироваться</Button>
+            <Button type="submit">Register</Button>
           </Col>
         </Row>
       </Form>

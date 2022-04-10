@@ -1,25 +1,25 @@
-import { useEffect, lazy, Suspense } from "react";
-import { Switch } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import Loader from "react-loader-spinner";
-import PrivateRoute from "../PrivateRoute";
-import PublicRoute from "../PublicRouter";
-import AppBar from "../AppBar/AppBar";
-import { fetchCurrentUser } from "../../redux/Auth/AuthOperations";
-import authSelectors from "../../redux/Auth/AuthSelectors";
-import styles from "../AppBar/AppBar.module.css";
+import { useEffect, lazy, Suspense } from 'react';
+import { Switch } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from 'react-loader-spinner';
+import PrivateRoute from '../PrivateRoute';
+import PublicRoute from '../PublicRouter';
+import AppBar from '../AppBar/AppBar';
+import { fetchCurrentUser } from '../../redux/auth/authOperations';
+import authSelectors from '../../redux/auth/authSelectors';
+import styles from '../AppBar/AppBar.module.css';
 
 const AsyncHomeView = lazy(() =>
-  import("../../views/HomepageView" /* webpackChunkName: "home-page"*/)
+  import('../../views/homePageView' /* webpackChunkName: "home-page"*/),
 );
 const AsyncLoginView = lazy(() =>
-  import("../../views/LoginView" /* webpackChunkName: "login-page"*/)
+  import('../../views/loginView' /* webpackChunkName: "login-page"*/),
 );
 const AsyncRegisterView = lazy(() =>
-  import("../../views/RegisterView" /* webpackChunkName: "register-page"*/)
+  import('../../views/registerView' /* webpackChunkName: "register-page"*/),
 );
 const AsyncContactsView = lazy(() =>
-  import("../../views/ContactsView" /* webpackChunkName: "contacts-page"*/)
+  import('../../views/contactsView' /* webpackChunkName: "contacts-page"*/),
 );
 
 export default function App() {

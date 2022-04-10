@@ -1,28 +1,37 @@
-import { combineReducers } from "redux";
-import { createReducer } from "@reduxjs/toolkit";
-import { addContact, removeContact, getFilterName } from "./PhonebookActions";
+import { combineReducers } from 'redux';
+import { createReducer } from '@reduxjs/toolkit';
+import { changeFilter } from './phonebookActions';
+import { fetchContactsAction, addContactAction, deleteContactAction } from './phonebookOperations';
 
-const itemReducer = createReducer(
-  [
-    { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-    { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-    { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-    { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-  ],
-  {
-    [addContact]: (state, { payload }) => [...state, payload],
-    [removeContact]: (state, { payload }) =>
-      state.filter(({ id }) => id !== payload),
-  }
-);
-
-const filterReducer = createReducer("", {
-  [getFilterName]: (state, { payload }) => (state = payload),
+const entities = createReducer([], {
+  [fetchContactsAction.fulfilled]: (_state, action) => action.payload.data,
+  [addContactAction.fulfilled]: (state, { payload }) => [payload.data, ...state],
+  [deleteContactAction.fulfilled]: (state, { payload }) => state.filter(({ id }) => id !== payload),
 });
 
-const contactsReducer = combineReducers({
-  items: itemReducer,
-  filter: filterReducer,
+const isLoading = createReducer(false, {
+  [fetchContactsAction.pending]: () => true,
+  [fetchContactsAction.fulfilled]: () => false,
+  [fetchContactsAction.rejected]: () => false,
+  [deleteContactAction.fulfilled]: () => false,
+  [deleteContactAction.pending]: () => true,
+  [deleteContactAction.rejected]: () => false,
+  [addContactAction.fulfilled]: () => false,
+  [addContactAction.pending]: () => true,
+  [addContactAction.rejected]: () => false,
 });
 
-export default contactsReducer;
+const error = createReducer(null, {
+  [fetchContactsAction.rejected]: (_state, action) => action.payload,
+  [fetchContactsAction.pending]: () => null,
+  [addContactAction.pending]: () => null,
+  [addContactAction.rejected]: (_state, action) => action.payload,
+  [deleteContactAction.pending]: () => null,
+  [deleteContactAction.rejected]: (_state, action) => action.payload,
+});
+
+const filter = createReducer('', {
+  [changeFilter]: (_state, { payload }) => payload,
+});
+
+export default combineReducers({ entities, isLoading, error, filter });
